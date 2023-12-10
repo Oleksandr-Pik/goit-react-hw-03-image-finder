@@ -3,7 +3,7 @@ import Modal from 'components/Modal';
 
 class ImageGalleryItem extends Component {
   state = {
-    showModal: false,
+    // showModal: false,
   };
 
   toggleModal = () => {
@@ -30,11 +30,11 @@ class ImageGalleryItem extends Component {
               onClick={this.toggleModal}
             />
             </a>
-        {this.state.showModal && <Modal 
+        {/* {this.state.showModal && <Modal 
         onClose={this.toggleModal} 
         // largeImageURL={largeImageURL} 
         // tags={tags}
-        />}
+        />} */}
           </li>
         ))}
       </>
