@@ -2,41 +2,50 @@ import { Component } from 'react';
 import Loader from 'components/Loader';
 import Searchbar from 'components/Searchbar';
 import Button from 'components/Button';
-
-import '../styles/styles.css';
-// import Modal from 'components/Modal';
+import Modal from 'components/Modal';
 import { getImages } from 'services/getImages';
 import ImageGallery from 'components/ImageGallery/ImageGallery';
+
+import '../styles/styles.css';
 
 class App extends Component {
   state = {
     searchQuery: '',
-    page: 1,
+    currentPage: 1,
     imgPerPage: 12,
     images: null,
-    // currentImage: null,
-    isLoading: false,
-    // showModal: false,
+    currentImage: null,
+    showModal: false,
     error: '',
+    isLoading: false,
+    isLoadMoreHidden: true,
   };
 
+  componentDidMount = () => {
+   
+  }
+  
+
   componentDidUpdate(_, prevState) {
-    const { searchQuery, page, imgPerPage } = this.state;
+    const { searchQuery, currentPage, imgPerPage, isLoadMoreHidden } =
+      this.state;
 
     if (prevState.searchQuery !== this.state.searchQuery) {
       this.setState({ isLoading: true });
-      getImages(searchQuery, page, imgPerPage)
+      getImages(searchQuery, currentPage, imgPerPage)
         .then(resp => {
           if (resp.ok) {
             return resp.json();
           }
-
           return Promise.reject(
             new Error(`Нет результатов поиска по запросу ${searchQuery}`)
           );
         })
         .then(data => {
           this.setState({ images: data.hits, isLoading: false });
+          currentPage === Math.ceil(data.totalHits / imgPerPage)
+            ? this.setState({ isLoadMoreHidden: true })
+            : this.setState({ isLoadMoreHidden: false });
         })
         .catch(error => {
           this.setState({ error });
@@ -56,25 +65,26 @@ class App extends Component {
   };
 
   render() {
-    const { images, showModal, isLoading, error } = this.state;
+    const { images, currentImage, showModal, isLoading, error, isLoadMoreHidden } =
+      this.state;
     return (
       <div className="App">
         <Searchbar onSubmit={this.handleSearch} />
-        {error && <h1>Error всё пропало! 😢 {error.massege}</h1>}
+        {error && <h1>Error Упс, что-то пошло не так! 😢 {error.massege}</h1>}
         {images && (
-          <ImageGallery 
-            images={images} 
-            // toggleModal={this.toggleModal} 
+          <ImageGallery
+            images={images}
+            toggleModal={this.toggleModal}
           />
         )}
         {isLoading && <Loader />}
-        <Button />
-       
-        {/* {showModal && <Modal 
+        {!isLoadMoreHidden && <Button />}
+
+        {showModal && <Modal 
         onClose={this.toggleModal} 
-        largeImageURL={largeImageURL} 
-        tags={tags}
-        />} */}
+        largeImageURL={currentImage} 
+        // tags={tags}
+        />}
       </div>
     );
   }

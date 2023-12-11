@@ -7,6 +7,10 @@ class Searchbar extends Component {
     value: '',
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    
+  }
+
   handleChange = ({ target: { value } }) => {
     this.setState({ value });
   };
