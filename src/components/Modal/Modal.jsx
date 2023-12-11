@@ -16,22 +16,22 @@ class Modal extends Component {
 
   handlePressESC = e => {
     if (e.code === 'Escape') {
-      this.props.toggleModal();
+      this.props.onClose();
     }
   };
 
   handleBackdropClick = e => {
     if(e.currentTarget === e.target) {
-      this.props.toggleModal();
+      this.props.onClose();
     }
   }
 
   render() {
-    const {onClose, currentImage, } = this.props
+    const { currentImage, } = this.props
     return createPortal(
       <div className="Overlay" onClick={this.handleBackdropClick}>
         <div className="Modal">
-          <img src={currentImage} alt='lage-image'  />
+          <img src={currentImage} alt='lageImage'  />
         </div>
       </div>,
       modalRoot,
