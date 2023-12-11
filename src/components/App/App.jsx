@@ -27,7 +27,7 @@ class App extends Component {
   
 
   componentDidUpdate(_, prevState) {
-    const { searchQuery, currentPage, imgPerPage, isLoadMoreHidden } =
+    const { searchQuery, currentPage, imgPerPage, } =
       this.state;
 
     if (prevState.searchQuery !== this.state.searchQuery) {
