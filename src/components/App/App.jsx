@@ -4,7 +4,7 @@ import Searchbar from 'components/Searchbar';
 import Button from 'components/Button';
 
 import '../styles/styles.css';
-import Modal from 'components/Modal';
+// import Modal from 'components/Modal';
 import { getImages } from 'services/getImages';
 import ImageGallery from 'components/ImageGallery/ImageGallery';
 
@@ -16,7 +16,7 @@ class App extends Component {
     images: null,
     // currentImage: null,
     isLoading: false,
-    showModal: false,
+    // showModal: false,
     error: '',
   };
 
@@ -69,11 +69,7 @@ class App extends Component {
         )}
         {isLoading && <Loader />}
         <Button />
-        {this.state.showModal && <Modal 
-        onClose={this.toggleModal} 
-        // largeImageURL={largeImageURL} 
-        // tags={tags}
-        />}
+       
         {/* {showModal && <Modal 
         onClose={this.toggleModal} 
         largeImageURL={largeImageURL} 
