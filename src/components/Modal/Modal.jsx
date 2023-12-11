@@ -31,7 +31,7 @@ class Modal extends Component {
     return createPortal(
       <div className="Overlay" onClick={this.handleBackdropClick}>
         <div className="Modal">
-          <img src={currentImage} alt='lage image'  />
+          <img src={currentImage} alt='lage-image'  />
         </div>
       </div>,
       modalRoot,
