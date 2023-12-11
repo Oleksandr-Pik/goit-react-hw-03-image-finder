@@ -2,10 +2,10 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 
-const ImageGallery = ({ images, toggleModal, currentImage }) => {
+const ImageGallery = ({ images, toggleModal, updateСurrentImage }) => {
   return (
     <ul className="ImageGallery">
-      <ImageGalleryItem images={images} toggleModal={toggleModal}/>
+      <ImageGalleryItem images={images} toggleModal={toggleModal} updateСurrentImage={updateСurrentImage}/>
     </ul>
   );
 };

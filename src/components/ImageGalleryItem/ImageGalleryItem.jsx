@@ -1,30 +1,22 @@
 import React, { Component } from 'react';
 
-class ImageGalleryItem extends Component {
-  state = {};
-
-  handleClick = () => {
-    console.log('click ');
-    this.props.toggleModal();
-    // this.props.currentImage =
-  };
-
-  render() {
+const ImageGalleryItem = ({images, toggleModal, updateСurrentImage}) => {
+  
     return (
       <>
-        {this.props.images.map(({ id, tags, webformatURL, largeImageURL }) => (
+        {images.map(({ id, tags, webformatURL, largeImageURL }) => (
           <li className="ImageGalleryItem" key={id}>
             <img
               className="ImageGalleryItem-image"
               src={webformatURL}
               alt={tags}
-              onClick={this.handleClick}
+              onClick={ () => {toggleModal(); updateСurrentImage(largeImageURL)}}
             />
           </li>
         ))}
       </>
     );
   }
-}
 
 export default ImageGalleryItem;
+// this.handleClick,

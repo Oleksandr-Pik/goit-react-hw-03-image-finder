@@ -13,7 +13,7 @@ class App extends Component {
     searchQuery: '',
     currentPage: 1,
     imgPerPage: 12,
-    images: null,
+    images: '',
     currentImage: null,
     showModal: false,
     error: '',
@@ -27,7 +27,7 @@ class App extends Component {
   
 
   componentDidUpdate(_, prevState) {
-    const { searchQuery, currentPage, imgPerPage, } =
+    const { searchQuery, currentPage, imgPerPage, images } =
       this.state;
 
     if (prevState.searchQuery !== this.state.searchQuery) {
@@ -43,9 +43,11 @@ class App extends Component {
         })
         .then(data => {
           this.setState({ images: data.hits, isLoading: false });
+          console.log('images.length :>> ', data.hits.length);
           currentPage === Math.ceil(data.totalHits / imgPerPage)
-            ? this.setState({ isLoadMoreHidden: true })
-            : this.setState({ isLoadMoreHidden: false });
+          ? this.setState({ isLoadMoreHidden: true })
+          : this.setState({ isLoadMoreHidden: false });
+          if (data.hits.length === 0) {this.setState({isLoadMoreHidden: true})};
         })
         .catch(error => {
           this.setState({ error });
@@ -64,8 +66,12 @@ class App extends Component {
     }));
   };
 
+  updateСurrentImage = (value) => {
+    this.setState({ currentImage: value })
+ }
+
   render() {
-    const { images, currentImage, showModal, isLoading, error, isLoadMoreHidden } =
+    const { images, currentImage, showModal, isLoading, error, isLoadMoreHidden, updateСurrentImage } =
       this.state;
     return (
       <div className="App">
@@ -75,14 +81,15 @@ class App extends Component {
           <ImageGallery
             images={images}
             toggleModal={this.toggleModal}
+            updateСurrentImage={this.updateСurrentImage}
           />
         )}
         {isLoading && <Loader />}
-        {!isLoadMoreHidden && <Button />}
+        {!isLoadMoreHidden && <Button  />}
 
         {showModal && <Modal 
         onClose={this.toggleModal} 
-        largeImageURL={currentImage} 
+        currentImage={currentImage} 
         // tags={tags}
         />}
       </div>
