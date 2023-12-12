@@ -21,17 +21,14 @@ class App extends Component {
     isLoadMoreHidden: true,
   };
 
-  componentDidMount = () => {
-   
-  }
-  
+  componentDidMount = () => {};
 
   componentDidUpdate(_, prevState) {
-    const { searchQuery, currentPage, imgPerPage, images } =
-      this.state;
+    const { searchQuery, currentPage, imgPerPage, images } = this.state;
 
     if (prevState.searchQuery !== this.state.searchQuery) {
       this.setState({ isLoading: true });
+
       getImages(searchQuery, currentPage, imgPerPage)
         .then(resp => {
           if (resp.ok) {
@@ -43,11 +40,14 @@ class App extends Component {
         })
         .then(data => {
           this.setState({ images: data.hits, isLoading: false });
-          console.log('images.length :>> ', data.hits.length);
+
           currentPage === Math.ceil(data.totalHits / imgPerPage)
-          ? this.setState({ isLoadMoreHidden: true })
-          : this.setState({ isLoadMoreHidden: false });
-          if (data.hits.length === 0) {this.setState({isLoadMoreHidden: true})};
+            ? this.setState({ isLoadMoreHidden: true })
+            : this.setState({ isLoadMoreHidden: false });
+
+          if (data.hits.length === 0) {
+            this.setState({ isLoadMoreHidden: true });
+          }
         })
         .catch(error => {
           this.setState({ error });
@@ -66,13 +66,29 @@ class App extends Component {
     }));
   };
 
-  updateСurrentImage = (value) => {
-    this.setState({ currentImage: value })
- }
+  updateСurrentImage = value => {
+    this.setState({ currentImage: value });
+  };
+
+  handleLoadMore = () => {
+    console.log('Вы нажали кнопку Load more... ');
+  };
 
   render() {
-    const { images, currentImage, showModal, isLoading, error, isLoadMoreHidden, updateСurrentImage } =
-      this.state;
+    const {
+      images,
+      currentImage,
+      showModal,
+      isLoading,
+      error,
+      isLoadMoreHidden,
+      searchQuery,
+      currentPage,
+      imgPerPage,
+
+      // handleLoadMore,
+      // updateСurrentImage,
+    } = this.state;
     return (
       <div className="App">
         <Searchbar onSubmit={this.handleSearch} />
@@ -85,13 +101,18 @@ class App extends Component {
           />
         )}
         {isLoading && <Loader />}
-        {!isLoadMoreHidden && <Button  />}
+        {!isLoadMoreHidden && (
+          <Button
+            onClick={this.handleLoadMore}
+            searchQuery={searchQuery}
+            currentPage={currentPage}
+            imgPerPage={imgPerPage}
+          />
+        )}
 
-        {showModal && <Modal 
-        onClose={this.toggleModal} 
-        currentImage={currentImage} 
-        // tags={tags}
-        />}
+        {showModal && (
+          <Modal onClose={this.toggleModal} currentImage={currentImage} />
+        )}
       </div>
     );
   }

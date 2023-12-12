@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 const modalRoot = document.querySelector('#modal-root');
 
 class Modal extends Component {
-  state = {}
+  state = {};
 
   componentDidMount() {
     window.addEventListener('keydown', this.handlePressESC);
@@ -21,20 +21,20 @@ class Modal extends Component {
   };
 
   handleBackdropClick = e => {
-    if(e.currentTarget === e.target) {
+    if (e.currentTarget === e.target) {
       this.props.onClose();
     }
-  }
+  };
 
   render() {
-    const { currentImage, } = this.props
+    const { currentImage } = this.props;
     return createPortal(
       <div className="Overlay" onClick={this.handleBackdropClick}>
         <div className="Modal">
-          <img src={currentImage} alt='lageImage'  />
+          <img src={currentImage} alt="lageImage" />
         </div>
       </div>,
-      modalRoot,
+      modalRoot
     );
   }
 }
