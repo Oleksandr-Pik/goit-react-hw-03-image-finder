@@ -24,7 +24,7 @@ class App extends Component {
   componentDidMount = () => {};
 
   componentDidUpdate(_, prevState) {
-    const { searchQuery, currentPage, imgPerPage, images } = this.state;
+    const { searchQuery, currentPage, imgPerPage } = this.state;
 
     if (prevState.searchQuery !== this.state.searchQuery) {
       this.setState({ isLoading: true });
