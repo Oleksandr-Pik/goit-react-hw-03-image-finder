@@ -4,7 +4,7 @@ const ImageGalleryItem = ({ images, toggleModal, updateСurrentImage }) => {
   return (
     <>
       {images.map(({ id, tags, webformatURL, largeImageURL }) => (
-        <li className="ImageGalleryItem" key={id}>
+        <li className="ImageGalleryItem" key={webformatURL}>
           <img
             className="ImageGalleryItem-image"
             src={webformatURL}

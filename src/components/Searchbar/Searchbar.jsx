@@ -7,10 +7,6 @@ class Searchbar extends Component {
     value: '',
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    
-  }
-
   handleChange = ({ target: { value } }) => {
     this.setState({ value });
   };
@@ -18,6 +14,7 @@ class Searchbar extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.onSubmit(this.state.value);
+    // this.setState({ value: "" });
   };
 
   render() {

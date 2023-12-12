@@ -12,8 +12,8 @@ class App extends Component {
   state = {
     searchQuery: '',
     currentPage: 1,
+    images: [],
     imgPerPage: 12,
-    images: '',
     currentImage: null,
     showModal: false,
     error: '',
@@ -23,26 +23,39 @@ class App extends Component {
 
   componentDidMount = () => {};
 
-  componentDidUpdate(_, prevState) {
-    const { images, searchQuery, currentPage, imgPerPage } = this.state;
+  async componentDidUpdate(_, prevState) {
+    const { searchQuery, images, currentPage, imgPerPage } = this.state;
+
+    if (prevState.searchQuery !== this.state.searchQuery) {
+      this.setState({
+        currentPage: 1,
+        // images: [],
+        currentImage: null,
+        error: '',
+      });
+      images.length = 0;
+    }
 
     if (
       prevState.searchQuery !== this.state.searchQuery ||
       prevState.currentPage !== this.state.currentPage
     ) {
-      this.setState({ isLoading: true });
+      this.setState({ isLoading: true, isLoadMoreHidden: true });
 
-      getImages(searchQuery, currentPage, imgPerPage)
+      await getImages(searchQuery, currentPage, imgPerPage)
         .then(resp => {
           if (resp.ok) {
             return resp.json();
           }
           return Promise.reject(
-            new Error(`Нет результатов поиска по запросу ${searchQuery}`)
+            new Error(`Error! Нет результатов поиска по запросу ${searchQuery}`)
           );
         })
         .then(data => {
-          this.setState({ images: [...images, ...data.hits], isLoading: false });
+          this.setState({
+            images: [...images, ...data.hits],
+            isLoading: false,
+          });
 
           currentPage === Math.ceil(data.totalHits / imgPerPage)
             ? this.setState({ isLoadMoreHidden: true })
@@ -61,7 +74,6 @@ class App extends Component {
 
   handleSearch = searchQuery => {
     this.setState({ searchQuery });
-    console.log('handleSearch method');
   };
 
   toggleModal = () => {
@@ -75,7 +87,6 @@ class App extends Component {
   };
 
   handleLoadMore = () => {
-    console.log('Вы нажали кнопку Load more... в App ');
     this.setState(prevState => ({
       currentPage: prevState.currentPage + 1,
     }));
@@ -93,7 +104,7 @@ class App extends Component {
     return (
       <div className="App">
         <Searchbar onSubmit={this.handleSearch} />
-        {error && <h1>Error Упс, что-то пошло не так! 😢 {error.massege}</h1>}
+        {error && <h1>Упс, что-то пошло не так! 😢 {error.massege}</h1>}
         {images && (
           <ImageGallery
             images={images}
