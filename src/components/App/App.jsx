@@ -3,8 +3,8 @@ import Loader from 'components/Loader';
 import Searchbar from 'components/Searchbar';
 import Button from 'components/Button';
 import Modal from 'components/Modal';
+import ImageGallery from 'components/ImageGallery';
 import { getImages } from 'services/getImages';
-import ImageGallery from 'components/ImageGallery/ImageGallery';
 
 import '../styles/styles.css';
 
@@ -24,9 +24,12 @@ class App extends Component {
   componentDidMount = () => {};
 
   componentDidUpdate(_, prevState) {
-    const { searchQuery, currentPage, imgPerPage } = this.state;
+    const { images, searchQuery, currentPage, imgPerPage } = this.state;
 
-    if (prevState.searchQuery !== this.state.searchQuery) {
+    if (
+      prevState.searchQuery !== this.state.searchQuery ||
+      prevState.currentPage !== this.state.currentPage
+    ) {
       this.setState({ isLoading: true });
 
       getImages(searchQuery, currentPage, imgPerPage)
@@ -39,7 +42,7 @@ class App extends Component {
           );
         })
         .then(data => {
-          this.setState({ images: data.hits, isLoading: false });
+          this.setState({ images: [...images, ...data.hits], isLoading: false });
 
           currentPage === Math.ceil(data.totalHits / imgPerPage)
             ? this.setState({ isLoadMoreHidden: true })
@@ -58,6 +61,7 @@ class App extends Component {
 
   handleSearch = searchQuery => {
     this.setState({ searchQuery });
+    console.log('handleSearch method');
   };
 
   toggleModal = () => {
@@ -71,7 +75,10 @@ class App extends Component {
   };
 
   handleLoadMore = () => {
-    console.log('Вы нажали кнопку Load more... ');
+    console.log('Вы нажали кнопку Load more... в App ');
+    this.setState(prevState => ({
+      currentPage: prevState.currentPage + 1,
+    }));
   };
 
   render() {
@@ -82,12 +89,6 @@ class App extends Component {
       isLoading,
       error,
       isLoadMoreHidden,
-      searchQuery,
-      currentPage,
-      imgPerPage,
-
-      // handleLoadMore,
-      // updateСurrentImage,
     } = this.state;
     return (
       <div className="App">
@@ -101,14 +102,8 @@ class App extends Component {
           />
         )}
         {isLoading && <Loader />}
-        {!isLoadMoreHidden && (
-          <Button
-            onClick={this.handleLoadMore}
-            searchQuery={searchQuery}
-            currentPage={currentPage}
-            imgPerPage={imgPerPage}
-          />
-        )}
+
+        {!isLoadMoreHidden && <Button handleLoadMore={this.handleLoadMore} />}
 
         {showModal && (
           <Modal onClose={this.toggleModal} currentImage={currentImage} />
