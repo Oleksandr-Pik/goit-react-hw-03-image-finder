@@ -1,4 +1,5 @@
 import React from 'react';
+// import PropTypes from 'prop-types';
 
 const ImageGalleryItem = ({tags, webformatURL, largeImageURL, toggleModal, updateСurrentImage }) => {
   return (
@@ -13,5 +14,7 @@ const ImageGalleryItem = ({tags, webformatURL, largeImageURL, toggleModal, updat
           />
   );
 };
+
+// ImageGallery.propTypes = {};
 
 export default ImageGalleryItem;

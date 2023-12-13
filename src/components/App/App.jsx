@@ -105,6 +105,7 @@ class App extends Component {
       <div className="App">
         <Searchbar onSubmit={this.handleSearch} />
         {error && <h1>Упс, что-то пошло не так! 😢 {error.massege}</h1>}
+
         {images.length > 0 && (
           <ImageGallery
             images={images}
@@ -112,6 +113,7 @@ class App extends Component {
             updateСurrentImage={this.updateСurrentImage}
           />
         )}
+
         {isLoading && <Loader />}
 
         {!isLoadMoreHidden && <Button handleLoadMore={this.handleLoadMore} />}
