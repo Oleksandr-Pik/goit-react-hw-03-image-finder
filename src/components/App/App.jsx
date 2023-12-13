@@ -29,7 +29,7 @@ class App extends Component {
     if (prevState.searchQuery !== this.state.searchQuery) {
       this.setState({
         currentPage: 1,
-        // images: [],
+        images: [],
         currentImage: null,
         error: '',
       });
@@ -105,7 +105,7 @@ class App extends Component {
       <div className="App">
         <Searchbar onSubmit={this.handleSearch} />
         {error && <h1>Упс, что-то пошло не так! 😢 {error.massege}</h1>}
-        {images && (
+        {images.length > 0 && (
           <ImageGallery
             images={images}
             toggleModal={this.toggleModal}
