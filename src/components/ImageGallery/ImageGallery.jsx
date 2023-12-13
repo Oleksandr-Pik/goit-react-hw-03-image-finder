@@ -5,11 +5,17 @@ import ImageGalleryItem from 'components/ImageGalleryItem';
 const ImageGallery = ({ images, toggleModal, updateСurrentImage }) => {
   return (
     <ul className="ImageGallery">
-      <ImageGalleryItem
-        images={images}
-        toggleModal={toggleModal}
-        updateСurrentImage={updateСurrentImage}
-      />
+      {images.map(({ tags, webformatURL, largeImageURL }) => (
+        <li className="ImageGalleryItem" key={webformatURL}>
+          <ImageGalleryItem
+            tags={tags}
+            webformatURL={webformatURL}
+            largeImageURL={largeImageURL}
+            toggleModal={toggleModal}
+            updateСurrentImage={updateСurrentImage}
+          />
+        </li>
+        ))}
     </ul>
   );
 };

@@ -1,10 +1,7 @@
 import React from 'react';
 
-const ImageGalleryItem = ({ images, toggleModal, updateСurrentImage }) => {
+const ImageGalleryItem = ({tags, webformatURL, largeImageURL, toggleModal, updateСurrentImage }) => {
   return (
-    <>
-      {images.map(({ id, tags, webformatURL, largeImageURL }) => (
-        <li className="ImageGalleryItem" key={webformatURL}>
           <img
             className="ImageGalleryItem-image"
             src={webformatURL}
@@ -14,9 +11,6 @@ const ImageGalleryItem = ({ images, toggleModal, updateСurrentImage }) => {
               updateСurrentImage(largeImageURL);
             }}
           />
-        </li>
-      ))}
-    </>
   );
 };
 
