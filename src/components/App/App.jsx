@@ -21,8 +21,6 @@ class App extends Component {
     isLoadMoreHidden: true,
   };
 
-  componentDidMount = () => {};
-
   async componentDidUpdate(_, prevState) {
     const { searchQuery, images, currentPage, imgPerPage } = this.state;
 
