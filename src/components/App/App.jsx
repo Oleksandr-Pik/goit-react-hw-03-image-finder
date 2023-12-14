@@ -24,21 +24,21 @@ class App extends Component {
   async componentDidUpdate(_, prevState) {
     const { searchQuery, images, currentPage, imgPerPage } = this.state;
 
-    if (prevState.searchQuery !== this.state.searchQuery) {
-      this.setState({
-        currentPage: 1,
-        images: [],
-        currentImage: null,
-        error: '',
-      });
-      images.length = 0;
-    }
-
     if (
-      prevState.searchQuery !== this.state.searchQuery ||
-      prevState.currentPage !== this.state.currentPage
+      this.state.searchQuery !== prevState.searchQuery ||
+      this.state.currentPage !== prevState.currentPage
     ) {
       this.setState({ isLoading: true, isLoadMoreHidden: true });
+
+      if (this.state.searchQuery !== prevState.searchQuery) {
+        this.setState({
+          currentPage: 1,
+          images: [],
+          currentImage: null,
+          error: '',
+        });
+        images.length = 0;
+      }
 
       await getImages(searchQuery, currentPage, imgPerPage)
         .then(resp => {

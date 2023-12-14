@@ -3,10 +3,11 @@ import React from 'react';
 import ImageGalleryItem from 'components/ImageGalleryItem';
 
 const ImageGallery = ({ images, toggleModal, updateСurrentImage }) => {
+  
   return (
     <ul className="ImageGallery">
-      {images.map(({ tags, webformatURL, largeImageURL }) => (
-        <li className="ImageGalleryItem" key={webformatURL}>
+      {images.map(({ tags, id, webformatURL, largeImageURL }) => (
+        <li className="ImageGalleryItem" key={id}>
           <ImageGalleryItem
             tags={tags}
             webformatURL={webformatURL}
@@ -15,7 +16,7 @@ const ImageGallery = ({ images, toggleModal, updateСurrentImage }) => {
             updateСurrentImage={updateСurrentImage}
           />
         </li>
-        ))}
+      ))}
     </ul>
   );
 };
