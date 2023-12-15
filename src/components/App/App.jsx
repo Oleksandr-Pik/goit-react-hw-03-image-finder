@@ -30,15 +30,7 @@ class App extends Component {
     ) {
       this.setState({ isLoading: true, isLoadMoreHidden: true });
 
-      if (this.state.searchQuery !== prevState.searchQuery) {
-        this.setState({
-          currentPage: 1,
-          images: [],
-          currentImage: null,
-          error: '',
-        });
-        images.length = 0;
-      }
+      
 
       await getImages(searchQuery, currentPage, imgPerPage)
         .then(resp => {
@@ -71,7 +63,18 @@ class App extends Component {
   }
 
   handleSearch = searchQuery => {
+    if ( searchQuery !==  this.state.searchQuery) {
+      this.setState({
+        currentPage: 1,
+        images: [],
+        currentImage: null,
+        error: '',
+      });
+      this.state.images.length = 0;
+    }
     this.setState({ searchQuery });
+
+
   };
 
   toggleModal = () => {
