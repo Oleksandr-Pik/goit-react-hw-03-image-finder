@@ -68,7 +68,7 @@ class App extends Component {
         currentImage: null,
         error: '',
       });
-      this.state.images.length = 0;
+      this.setState(this.state.images.length = 0)
     }
     
     this.setState({ searchQuery });
