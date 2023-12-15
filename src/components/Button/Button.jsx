@@ -1,5 +1,4 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 
 const Button = ({ handleLoadMore }) => {
 
@@ -13,7 +12,5 @@ const Button = ({ handleLoadMore }) => {
     </button>
   );
 };
-
-// Button.propTypes = {};
 
 export default Button;
