@@ -61,6 +61,7 @@ class App extends Component {
   }
 
   handleSearch = searchQuery => {
+    
     if ( searchQuery !==  this.state.searchQuery) {
       this.setState({
         currentPage: 1,
@@ -68,7 +69,7 @@ class App extends Component {
         currentImage: null,
         error: '',
       });
-      this.setState(this.state.images.length = 0)
+      // this.state.images.length = 0;
     }
     
     this.setState({ searchQuery });
