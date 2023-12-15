@@ -30,8 +30,6 @@ class App extends Component {
     ) {
       this.setState({ isLoading: true, isLoadMoreHidden: true });
 
-      
-
       await getImages(searchQuery, currentPage, imgPerPage)
         .then(resp => {
           if (resp.ok) {
@@ -72,8 +70,8 @@ class App extends Component {
       });
       this.state.images.length = 0;
     }
+    
     this.setState({ searchQuery });
-
 
   };
 
